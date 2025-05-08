@@ -1,0 +1,89 @@
+
+/* House Detail Section */
+.house-detail {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.house-detail h1 {
+    text-align: center;
+    font-size: 36px;
+    margin-bottom: 20px;
+    color: #2d2d2d;
+}
+
+/* House Info Layout */
+.house-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+/* House Image Styling */
+.house-info img {
+    max-width: 500px;
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+/* House Description Styling */
+.house-description {
+    max-width: 600px;
+    width: 100%;
+    padding: 20px;
+    background-color: #fafafa;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.house-description p {
+    font-size: 18px;
+    margin-bottom: 15px;
+    /* color: #555; */
+}
+.price{
+    background-color: rgb(194, 188, 188);
+    text-align: center;
+    padding: 10px;
+    /* color:white; */
+}
+.house-description p:first-child {
+    font-weight: bold;
+}
+
+.house-description p:nth-child(2),
+.house-description p:nth-child(3) {
+    font-size: 16px;
+}
+
+.house-description p:last-child {
+    font-size: 14px;
+    color: #777;
+}
+.book{
+    text-align: center;
+    padding:10px;
+    background-color: rgb(9, 236, 9);
+}
+.book a{
+    color:white;
+    
+    text-decoration: none;
+    font-size: 16px;
+    
+}
+
+/* tenant-booking */
+.rent-booking{
+    height:100%;
+    width:100%;
+    background-color: black;
+    margin: 100px;
+}

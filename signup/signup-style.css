@@ -1,0 +1,80 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.signup{
+    width: 100%;
+    height: 100vh;
+    padding:10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background:linear-gradient(135deg, pink, red);
+    
+}
+.registration{
+    /* background:linear-gradient(135deg, blue, white); */
+    background-color: white;
+    padding:20px 50px;
+    width:70%;
+    border-radius: 10px;
+}
+.registration h1{
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    text-align: center;
+    position: relative;
+}
+.registration h1::after{
+    content: " ";
+    width:100%;
+    height:3px;
+    left: 0;
+    bottom: 0;
+    padding-top: 2px;
+    position: absolute;
+    background-color: black;
+    margin-bottom:-10px;
+}
+form .reg-detail{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+form .reg-detail .reg-input{
+    width:calc(100% / 2 - 20px);
+    padding-bottom: 10px;
+    position: relative;
+}
+form .reg-detail .reg-input label{
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+form .reg-detail .reg-input .input-field{
+    height:45px;
+    width:100%;
+    outline: none;
+    border-radius: 10px;
+    padding-left: 10px;
+}
+form .reg-detail .reg-input span{
+    /* position: absolute; */
+    width:100%;
+    height:3vh;
+    border: 1px solid transparent;
+    color:red;
+}
+form .reg-detail .btn{
+    padding-top:10px;
+}
+form .reg-detail .btn .reg-btn{
+    padding: 10px 30px;
+    text-align: center;
+    cursor: pointer;
+    font-weight: 700;
+}
+form .reg-detail .btn .back a{
+    text-decoration: none;
+    color:black;
+}

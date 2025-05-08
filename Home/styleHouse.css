@@ -1,0 +1,38 @@
+/*------------- Rent page started--------------------- */
+.rent-list h1{
+    padding-top: 50px;
+    padding-bottom: 50px;
+    margin-bottom: 20px;
+    text-align: center;
+    background-color: rgb(72, 72, 122);
+}
+.rent-list .box-container{
+    margin-inline: 50px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+   /* display: grid; */
+   /* grid-template-columns: repeat(auto-fit, 27rem); */
+   /* gap:1.5rem; */
+}
+.rent-list .box-container .room_box{
+    text-align: center;
+    /* flex-basis: 41%; */
+    /* padding:1px; */
+    box-shadow: 2px 2px;
+    border:2px solid rgb(139, 138, 138);
+    margin-bottom: 20px;
+}
+.rent-list .box-container .room_box img{
+    height:20rem;
+    width:20rem;
+}
+.room_box .view a{
+    background-color: beige;
+    padding:10px;
+    font-weight: bold;
+    color:white;
+}
+
+
+/*------------- Rent page end--------------------- */

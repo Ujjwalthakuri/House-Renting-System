@@ -1,0 +1,76 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #f9f9f9;
+    margin: 0;
+    padding: 0;
+}
+
+.house-detail {
+    max-width: 800px;
+    margin: 50px auto;
+    background: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.house-detail h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 32px;
+}
+
+.house-info {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.house-description p {
+    display: flex;
+    flex-direction: column;
+    font-size: 16px;
+    color: #555;
+}
+
+.house-description p input {
+    margin-top: 5px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+    width: 100%;
+}
+
+button.book {
+    margin-top: 20px;
+    padding: 12px 20px;
+    background-color: #3498db;
+    color: #fff;
+    font-size: 17px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button.book:hover {
+    background-color: #2980b9;
+}
+
+/* Responsive for Mobile */
+@media (max-width: 600px) {
+    .house-detail {
+        margin: 20px;
+        padding: 20px;
+    }
+
+    .house-description p input {
+        font-size: 14px;
+    }
+
+    button.book {
+        width: 100%;
+    }
+}

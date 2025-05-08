@@ -1,0 +1,139 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing:border-box;
+}
+.head{
+    height:10vh;
+    background:linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,1.5));
+    display:flex;
+    justify-content: space-between ;
+    align-items: center;
+    padding-inline: 2rem;
+}
+.head .logo{
+    color:white;
+    text-decoration: none;
+    font-size: 2rem;
+    /* margin-right:10px; */
+}
+nav{
+    width:80%;
+    display: flex;
+    align-items: center;
+    /* background-color: blue; */
+    /* justify-content: center; */
+    /* background-color: blue; */
+}
+.head nav .search{
+    height:5vh;
+    width: 60%;
+    background-color: rgb(205, 43, 226);
+    color:wheat;
+    display: flex;
+    column-gap: 5px;
+    border-radius: 5px;
+}
+.search .search-input{
+    width:95%;
+    outline:none;
+    padding-left: 20px;
+    border: none;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    
+}
+.head .search .search-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size:1.5rem;
+}
+.head nav .head-right{
+    display: flex;
+    column-gap: 5px;
+    list-style: none;
+    margin-left: 10px;
+    
+}
+.head-right li a{
+    text-decoration: none;
+    font-size: 1.5rem;
+    margin-left: 10px;
+    color:wheat;
+}
+.head .login{
+    margin-left:3vw;
+}
+
+.head .login a{
+    color:white;
+    font-size: 1.5rem;
+}
+.head .login .login-drop-down{
+    position:absolute;
+    background-color: black;
+    padding:10px;
+    list-style: none;
+    border-radius: 10px;
+    height:100px;
+    display:none;
+}
+/* .head .login:hover .login-drop-down {
+    display: block;
+} */
+ .login-drop{
+    display:block;
+ }
+
+.login .login-drop-down li{
+    padding-top:10px;
+}
+.login .login-drop-down li a{
+    text-decoration: none;
+}
+
+
+/* Home page started */
+.homepage{
+    height:90vh;
+    width: 100%;
+    background:linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)); 
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+.videos{
+    position:absolute;
+    z-index:-1;
+    right:0;
+    bottom:0;
+}
+
+.content{
+    text-align: center;
+}
+.content h1{
+    font-size: 4rem;
+    color:white;
+}
+/* .content h3{
+    border:2px solid white;
+
+} */
+.content h3 a{
+    text-decoration: none;
+    font-size: 2rem;
+    color:white;
+    border:2px solid white;
+    border-radius: 50px;
+    padding:8px 8px;
+}
+.content h3 a:hover{
+    color:yellow;
+    background-color: black;
+    border:transparent;
+}
+
+
+

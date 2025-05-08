@@ -1,0 +1,297 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f5f7fa;
+    color: #333;
+}
+
+/* Sidebar Layout */
+.admin-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+.admin-sidebar {
+    width: 240px;
+    background-color: #1f2937;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px 0;
+}
+
+.logo {
+    text-align: center;
+    font-size: 26px;
+    font-weight: bold;
+    color: #60a5fa;
+    margin-bottom: 30px;
+}
+
+.sidebar-menu {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar-menu li {
+    margin-bottom: 10px;
+}
+
+.sidebar-menu a {
+    display: block;
+    padding: 12px 25px;
+    color: #e5e7eb;
+    text-decoration: none;
+    transition: background 0.3s;
+}
+
+.sidebar-menu a.active,
+.sidebar-menu a:hover {
+    background-color: #374151;
+    color: #fff;
+}
+
+.sidebar-footer {
+    padding: 0 25px;
+    margin-top: auto;
+}
+
+.sidebar-footer a {
+    display: block;
+    margin: 10px 0;
+    color: #d1d5db;
+    text-decoration: none;
+}
+
+.sidebar-footer a:hover {
+    text-decoration: underline;
+}
+
+/* Main Content */
+.admin-content {
+    flex-grow: 1;
+    padding: 40px;
+}
+
+/* Section Title */
+.heading {
+    font-size: 26px;
+    font-weight: bold;
+    color: #1f2937;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+/* Table Styles */
+.table-container {
+    overflow-x: auto;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.table thead {
+    background-color: #1f2937;
+    color: white;
+}
+
+.table th,
+.table td {
+    padding: 14px;
+    text-align: center;
+    vertical-align: middle;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.table th.table-head {
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 13px;
+}
+
+/* Consistent Image Styling in Tables */
+.table td.pic img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 6px;
+}
+/* Fix large image size in owner-home.php */
+.table td.pic img,
+.table img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+/* Buttons */
+.acc-del-btn {
+    padding: 6px 12px;
+    margin: 4px 2px;
+    border: none;
+    background-color: #2563eb;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.acc-del-btn:hover {
+    background-color: #1d4ed8;
+}
+
+.acc-del-btn a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    display: inline-block;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .admin-container {
+        flex-direction: column;
+    }
+
+    .admin-sidebar {
+        width: 100%;
+        flex-direction: row;
+        overflow-x: auto;
+    }
+
+    .sidebar-menu {
+        display: flex;
+        flex-grow: 1;
+        justify-content: space-around;
+    }
+
+    .admin-content {
+        padding: 20px;
+    }
+
+    .table th,
+    .table td {
+        font-size: 12px;
+        padding: 10px;
+    }
+}
+
+/* house form  */
+
+/* Signup Form Styles */
+.signup {
+    background-color: white;
+    padding: 40px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    max-width: 800px;
+    margin: 40px auto;
+}
+
+.reg-su {
+    font-size: 28px;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.reg-detail {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.reg-input {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.reg-input label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+}
+
+.reg-input input {
+    padding: 12px;
+    font-size: 14px;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    background-color: #f9fafb;
+    transition: border-color 0.3s;
+}
+
+.reg-input input:focus {
+    border-color: #2563eb;
+    outline: none;
+}
+
+.reg-input input[type="file"] {
+    padding: 8px;
+    cursor: pointer;
+}
+
+.reg-input input::placeholder {
+    color: #9ca3af;
+    font-size: 14px;
+}
+
+.btn {
+    text-align: center;
+}
+
+.reg-btn {
+    padding: 12px 25px;
+    font-size: 16px;
+    color: white;
+    background-color: #2563eb;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.reg-btn:hover {
+    background-color: #1d4ed8;
+}
+
+.reg-btn:focus {
+    outline: none;
+}
+
+@media (max-width: 768px) {
+    .signup {
+        padding: 30px;
+    }
+
+    .reg-su {
+        font-size: 24px;
+    }
+
+    .reg-input input {
+        font-size: 12px;
+    }
+
+    .reg-btn {
+        padding: 10px 20px;
+    }
+}
+
+
+
