@@ -1,68 +1,150 @@
 <?php
-include('../connect.php'); // Include the connect.php file from the parent folder
-
+include('../connect.php');
 session_start();
 
-// Check if session variable is set
 if (!isset($_SESSION['id'])) {
-    // Redirect to login page if session variable is not set
     header('location:../Home/home.php');
-    exit(); // Stop further execution
+    exit();
 }
 
 $owner = $_SESSION['email'];
-$sql="select * from user where email='$owner'";
-$query=mysqli_query($con, $sql);
-$row=mysqli_fetch_array($query);
-$id=$row['id'];
+$sql = "SELECT * FROM user WHERE email='$owner'";
+$query = mysqli_query($con, $sql);
+$row = mysqli_fetch_array($query);
+$id = $row['id'];
 
-if(isset($_POST['submit'])){
+$errors = [];
 
-    // for image
-    $image = $_FILES ['image']['name'];
+if (isset($_POST['submit'])) {
+    // Files
+    $image = $_FILES['image']['name'];
     $tempname = $_FILES['image']['tmp_name'];
-    $folder = 'C:\\xampp\\htdocs\\Houes_Project\\image\\' . $image;
+    $document = $_FILES['document']['name'];
+    $tempdoc = $_FILES['document']['tmp_name'];
 
-    // location
-    $location = mysqli_real_escape_string($con, $_POST['location']);
-    $latitude = mysqli_real_escape_string($con, $_POST['latitude']);
-    $longitude = mysqli_real_escape_string($con, $_POST['longitude']);
-    // location
-    $area=$_POST['area'];
-    $talla=$_POST['talla'];
-    $roomNum=$_POST['roomNum'];
-    $facilities=$_POST['facilities']; 
-    $more = $_POST['more'];
+    // Fields
+    $location = trim($_POST['location']);
+    $latitude = trim($_POST['latitude']);
+    $longitude = trim($_POST['longitude']);
+    $area = trim($_POST['area']);
+    $talla = trim($_POST['talla']);
+    $roomNum = trim($_POST['roomNum']);
+    $facilities = trim($_POST['facilities']);
+    $more = trim($_POST['more']);
     $availability = "available";
     $admin_status = "pending...";
 
-    // for document
-    $document = $_FILES ['document']['name'];
-    $tempdoc = $_FILES['document']['tmp_name'];  
-    $doc_folder =  'C:\\xampp\\htdocs\\Houes_Project\\document\\' . $document;
+    // File paths
+    $folder = 'C:\\xampp\\htdocs\\Houes_Project\\image\\' . $image;
+    $doc_folder = 'C:\\xampp\\htdocs\\Houes_Project\\document\\' . $document;
 
-    // Upload both files separately
-    $imageUploaded = move_uploaded_file($tempname, $folder);
-    $docUploaded = move_uploaded_file($tempdoc, $doc_folder);
+    // Regex patterns
+    $alphaRegex = '/^[a-zA-Z\s]+$/';
+    $numericRegex = '/^\d+$/';
+    $latLngRegex = '/^-?\d+(\.\d+)?$/';
+    $areaRegex = '/^\d+(m|km)$/';
+    $facilityRegex = '/^[a-zA-Z\s,\/]+$/';
+    $allowedImageExt = ['png', 'jpg', 'jpeg'];
+    $allowedDocExt = ['pdf', 'doc', 'docx'];
 
-    if ($imageUploaded && $docUploaded) {
-        $sql = "INSERT INTO house (u_id, image, location, area, talla, roomNum, facilities, more, document, availability, admin_status, latitude, longitude) 
-        VALUES ('$id', '$image', '$location', '$area', '$talla', '$roomNum', '$facilities', '$more', '$document', '$availability', '$admin_status', '$latitude', '$longitude')";
-        
-        $result = mysqli_query($con, $sql);
-    
-        if ($result) {
-            echo "Data Inserted";
+    // Validate image extension
+    $imageExt = strtolower(pathinfo($image, PATHINFO_EXTENSION));
+    if (empty($image)) {
+        $errors['image'] = "Image is required.";
+    } elseif (!in_array($imageExt, $allowedImageExt)) {
+        $errors['image'] = "Only png, jpg, jpeg files are allowed.";
+    }
+
+    // Validate address
+    if (empty($location)) {
+        $errors['location'] = "Address is required.";
+    } elseif (!preg_match($alphaRegex, $location)) {
+        $errors['location'] = "Address can only include alphabets.";
+    }
+
+    // Validate latitude
+    if (empty($latitude)) {
+        $errors['latitude'] = "Latitude is required.";
+    } elseif (!preg_match($latLngRegex, $latitude)) {
+        $errors['latitude'] = "Latitude must be a valid number.";
+    }
+
+    // Validate longitude
+    if (empty($longitude)) {
+        $errors['longitude'] = "Longitude is required.";
+    } elseif (!preg_match($latLngRegex, $longitude)) {
+        $errors['longitude'] = "Longitude must be a valid number.";
+    }
+
+    // Validate area
+    if (empty($area)) {
+        $errors['area'] = "Total area is required.";
+    } elseif (!preg_match($areaRegex, $area)) {
+        $errors['area'] = "Area must be in format like 12m or 12km.";
+    }
+
+    // Validate talla
+    if (empty($talla)) {
+        $errors['talla'] = "Talla is required.";
+    }
+
+    // Validate number of rooms
+    if (empty($roomNum)) {
+        $errors['roomNum'] = "Number of rooms is required.";
+    } elseif (!preg_match($numericRegex, $roomNum)) {
+        $errors['roomNum'] = "Number of rooms must be numeric.";
+    }
+
+    // Validate facilities
+    if (empty($facilities)) {
+        $errors['facilities'] = "Facilities are required.";
+    } elseif (!preg_match($facilityRegex, $facilities)) {
+        $errors['facilities'] = "Facilities can include alphabets, commas, and slashes.";
+    }
+
+    // Validate short description
+    if (empty($more)) {
+        $errors['more'] = "Short description is required.";
+    } elseif (!preg_match($facilityRegex, $more)) {
+        $errors['more'] = "Description can include alphabets, commas, and slashes.";
+    }
+
+    // Validate document extension
+    $docExt = strtolower(pathinfo($document, PATHINFO_EXTENSION));
+    if (empty($document)) {
+        $errors['document'] = "Document is required.";
+    } elseif (!in_array($docExt, $allowedDocExt)) {
+        $errors['document'] = "Only pdf, doc, docx files are allowed.";
+    }
+
+    // If no errors, insert into database
+    if (empty($errors)) {
+        $imageUploaded = move_uploaded_file($tempname, $folder);
+        $docUploaded = move_uploaded_file($tempdoc, $doc_folder);
+
+        if ($imageUploaded && $docUploaded) {
+            $sql = "INSERT INTO house (u_id, image, location, area, talla, roomNum, facilities, more, document, availability, admin_status, latitude, longitude) 
+            VALUES ('$id', '$image', '$location', '$area', '$talla', '$roomNum', '$facilities', '$more', '$document', '$availability', '$admin_status', '$latitude', '$longitude')";
+
+            $result = mysqli_query($con, $sql);
+
+            if ($result) {
+                echo "<p style='color:green;'>Data Inserted Successfully.</p>";
+            } else {
+                die(mysqli_error($con));
+            }
         } else {
-            die(mysqli_error($con));
+            echo "<p style='color:red;'>Error uploading files.</p>";
+        }
+    } else {
+        // Print all errors
+        foreach ($errors as $error) {
+            echo "<p style='color:red;'>$error</p>";
         }
     }
-    
-    } else {
-        echo "Sorry, there was an error uploading your file.";
-    }
-
+}
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -98,53 +180,63 @@ if(isset($_POST['submit'])){
             <div class="signup">
                 <h1 class="reg-su">Add a House</h1>
                 <form action="#" method="post" enctype="multipart/form-data">
-                    <div class="reg-detail">
-                        <div class="reg-input">
-                            <label for="image">Image</label>
-                            <input type="file" id="image" class="input-field" name="image" required><br>
-                        </div>
-                        <div class="reg-input">
-                            <label for="location">Address</label>
-                            <input type="text" id="location" class="input-field" name="location" placeholder="Location" required><br>
-                        </div>
-                        <div class="reg-input">
-                            <label for="latitude">Latitude</label>
-                            <input type="text" id="latitude" class="input-field" name="latitude" placeholder="e.g., 37.7749" required><br>
-                        </div>
-                        <div class="reg-input">
-                            <label for="longitude">Longitude</label>
-                            <input type="text" id="longitude" class="input-field" name="longitude" placeholder="e.g., -122.4194" required><br>
-                        </div>
+    <div class="reg-detail">
+        <div class="reg-input">
+            <label for="image">Image</label>
+            <input type="file" id="image" class="input-field" name="image"><br>
+            <span class="error"><?php echo $errors['image'] ?? ''; ?></span>
+        </div>
+        <div class="reg-input">
+            <label for="location">Address</label>
+            <input type="text" id="location" class="input-field" name="location" placeholder="Location"><br>
+            <span class="error"><?php echo $errors['location'] ?? ''; ?></span>
+        </div>
+        <div class="reg-input">
+            <label for="latitude">Latitude</label>
+            <input type="text" id="latitude" class="input-field" name="latitude" placeholder="e.g., 37.7749"><br>
+            <span class="error"><?php echo $errors['latitude'] ?? ''; ?></span>
+        </div>
+        <div class="reg-input">
+            <label for="longitude">Longitude</label>
+            <input type="text" id="longitude" class="input-field" name="longitude" placeholder="e.g., -122.4194"><br>
+            <span class="error"><?php echo $errors['longitude'] ?? ''; ?></span>
+        </div>
+        <div class="reg-input">
+            <label for="area">Total Area</label>
+            <input type="text" id="area" class="input-field" name="area" placeholder="Area"><br>
+            <span class="error"><?php echo $errors['area'] ?? ''; ?></span>
+        </div>
+        <div class="reg-input">
+            <label for="talla">Talla</label>
+            <input type="text" id="talla" class="input-field" name="talla" placeholder="Talla"><br>
+            <span class="error"><?php echo $errors['talla'] ?? ''; ?></span>
+        </div>
+        <div class="reg-input">
+            <label for="roomNum">Number of Rooms</label>
+            <input type="text" id="roomNum" class="input-field" name="roomNum" placeholder="Enter number of rooms"><br>
+            <span class="error"><?php echo $errors['roomNum'] ?? ''; ?></span>
+        </div>
+        <div class="reg-input">
+            <label for="facilities">Facilities</label>
+            <input type="text" id="facilities" class="input-field" name="facilities" placeholder="Parking, Water, etc."><br>
+            <span class="error"><?php echo $errors['facilities'] ?? ''; ?></span>
+        </div>
+        <div class="reg-input">
+            <label for="more">Short Description</label>
+            <input type="text" id="more" class="input-field" name="more" placeholder="Additional description"><br>
+            <span class="error"><?php echo $errors['more'] ?? ''; ?></span>
+        </div>
+        <div class="reg-input">
+            <label for="document">House Document</label>
+            <input type="file" id="document" class="input-field" name="document"><br>
+            <span class="error"><?php echo $errors['document'] ?? ''; ?></span>
+        </div>
+        <div class="btn">
+            <input type="submit" value="Submit" class="reg-btn" name="submit">
+        </div>
+    </div>
+</form>
 
-                        <div class="reg-input">
-                            <label for="area">Total Area</label>
-                            <input type="text" id="area" class="input-field" name="area" placeholder="Area" required><br>
-                        </div>
-                        <div class="reg-input">
-                            <label for="talla">Talla</label>
-                            <input type="text" id="talla" class="input-field" name="talla" placeholder="Talla" required><br>
-                        </div>
-                        <div class="reg-input">
-                            <label for="roomNum">Number of Rooms</label>
-                            <input type="text" id="roomNum" class="input-field" name="roomNum" placeholder="Enter number of rooms" required><br>
-                        </div>
-                        <div class="reg-input">
-                            <label for="facilities">Facilities</label>
-                            <input type="text" id="facilities" class="input-field" name="facilities" placeholder="Parking, Water, etc." required><br>
-                        </div>
-                        <div class="reg-input">
-                            <label for="more">Short Description</label>
-                            <input type="text" id="more" class="input-field" name="more" placeholder="Additional description" required><br>
-                        </div>
-                        <div class="reg-input">
-                            <label for="document">House Document</label>
-                            <input type="file" id="document" class="input-field" name="document" required><br>
-                        </div>
-                        <div class="btn">
-                            <input type="submit" value="Submit" class="reg-btn" name="submit">
-                        </div>
-                    </div>
-                </form>
             </div>
         </div>
     </div>
