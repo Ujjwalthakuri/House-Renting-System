@@ -55,8 +55,8 @@ if (!isset($_SESSION['id'])) {
             <tbody>
            
            <?php
-               $sql = "SELECT booking_request.id, booking_request.house_id, house.image AS house_image, 
-                              user.fname AS owner_name, booking_request.status
+               $sql = "SELECT booking_request.id, booking_request.house_id, booking_request.owner_id,
+               house.image AS house_image, user.fname AS owner_name, booking_request.status
                        FROM booking_request
                        INNER JOIN user ON user.id = booking_request.owner_id
                        INNER JOIN house ON house.id = booking_request.house_id
@@ -68,6 +68,7 @@ if (!isset($_SESSION['id'])) {
                     $id = $row['id'];
                     $house_id = $row['house_id']; // Fetch the house ID
                     $house_image = $row['house_image']; // Get the image URL
+                    $owner_id = $row['owner_id'];
                     $owner_name = $row['owner_name']; // Get the owner's name
                     $status = $row['status'];
                     

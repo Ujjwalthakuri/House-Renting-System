@@ -30,7 +30,7 @@ include('../connect.php'); // Include the connect.php file from the parent folde
 
             <ul class="head-right">
                 <li><a href="home.php">Home</a> </li>
-                <li><a href="#">About</a> </li>
+                <!-- <li><a href="#">About</a> </li> -->
                 <li><a href="house.php">Houses</a> </li>
             </ul>
         <!-- </nav> -->
@@ -68,7 +68,7 @@ include('../connect.php'); // Include the connect.php file from the parent folde
     <p>Monthly Price: <?php echo $result['price']; ?></p>
     <!-- <p>Talla: <?php echo $result['talla']; ?></p> -->
     <button class="view">
-        <a href="../signin/signin.php">View Detail</a>
+        <a href="../signin/signin.php" >View Detail</a>
     </button>
 
 </div>

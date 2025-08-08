@@ -73,8 +73,12 @@ include("../connect.php");
                                 <td>$status</td>
                                 <td>$role</td>
                                 <td>
-                                    <button class='acc-del-btn'><a href='../accept.php?accepteid=$id'>Accept</a></button>
-                                    <button class='acc-del-btn'><a href='../delete.php?deleteid=$id'>Delete</a></button>
+                                    <button class='acc-del-btn'><a href='../accept.php?accepteid=$id'
+                                    onclick=\"return confirm('Are you sure you want to Accept this user?');\">Accept</a></button>
+                                    <button class='acc-del-btn'>
+        <a href='../delete.php?deleteid=$id' 
+           onclick=\"return confirm('Are you sure you want to delete this user?');\">Delete</a>
+    </button>
                                 </td>
                             </tr>";
                         }
@@ -107,7 +111,7 @@ include("../connect.php");
                 </thead>
                 <tbody>
                     <?php
-                    $sql = "SELECT * FROM user WHERE status='accept'";
+                    $sql = "SELECT * FROM user WHERE status='accept' AND role!='admin'";
                     $result = mysqli_query($con, $sql);
                     if ($result) {
                         while ($row = mysqli_fetch_assoc($result)) {
@@ -129,8 +133,11 @@ include("../connect.php");
                                 <td>$status</td>
                                 <td>$role</td>
                                 <td>
-                                    <button class='acc-del-btn'><a href='../delete.php?deleteid=$id'>Delete</a></button>
-                                </td>
+    <button class='acc-del-btn'>
+        <a href='../delete.php?deleteid=$id' 
+           onclick=\"return confirm('Are you sure you want to delete this user?');\">Delete</a>
+    </button>
+</td>
                             </tr>";
                         }
                     }
@@ -184,7 +191,10 @@ include("../connect.php");
                                 <td>$status</td>
                                 <td>$role</td>
                                 <td>
-                                    <button class='acc-del-btn'><a href='../delete.php?deleteid=$id'>Delete</a></button>
+                                    <button class='acc-del-btn'>
+        <a href='../delete.php?deleteid=$id' 
+           onclick=\"return confirm('Are you sure you want to delete this user?');\">Delete</a>
+    </button>
                                 </td>
                             </tr>";
                         }
@@ -239,7 +249,10 @@ include("../connect.php");
                                 <td>$status</td>
                                 <td>$role</td>
                                 <td>
-                                    <button class='acc-del-btn'><a href='../delete.php?deleteid=$id'>Delete</a></button>
+                                    <button class='acc-del-btn'>
+        <a href='../delete.php?deleteid=$id' 
+           onclick=\"return confirm('Are you sure you want to delete this user?');\">Delete</a>
+    </button>
                                 </td>
                             </tr>";
                         }

@@ -48,7 +48,7 @@ $stmt->execute();
 $result = $stmt->get_result();
 
 if ($result->num_rows > 0) {
-    echo "<script>alert('You have already requested this house.'); window.location.href='../tenant-home/home.php';</script>";
+   echo "<script>alert('You have already requested this house.'); window.location.href='house-detail.php?detailid=$house_id';</script>";
     exit();
 }
 
@@ -63,9 +63,11 @@ if (!$stmt) {
 $stmt->bind_param("iii", $house_id, $tenant_id, $owner_id);
 
 if ($stmt->execute()) {
-    echo "<script>alert('Booking request sent successfully!'); window.location.href='../tenant_home/home.php';</script>";
+    echo "<script>alert('Booking request sent successfully!'); window.location.href='house-detail.php?detailid=$house_id';</script>";
+
 } else {
-    echo "<script>alert('Failed to send request. Please try again.'); window.location.href='../tenant_home/home.php';</script>";
+    echo "<script>alert('Failed to send request. Please try again.'); window.location.href='house-detail.php?detailid=$house_id';</script>";
+
 }
 
 $stmt->close();

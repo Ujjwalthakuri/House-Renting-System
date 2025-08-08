@@ -31,15 +31,19 @@ if (isset($_POST['submit'])) {
     $roomNum = trim($_POST['roomNum']);
     $facilities = trim($_POST['facilities']);
     $more = trim($_POST['more']);
+    $price = trim($_POST['price']);
     $availability = "available";
     $admin_status = "pending...";
+    $owner_status = "pending";
 
     // File paths
-    $folder = 'C:\\xampp\\htdocs\\Houes_Project\\image\\' . $image;
-    $doc_folder = 'C:\\xampp\\htdocs\\Houes_Project\\document\\' . $document;
+    $folder = "../image/" . $image;
+    $doc_folder = "../document/" . $document;
+
 
     // Regex patterns
     $alphaRegex = '/^[a-zA-Z\s]+$/';
+    $addressRegex = '/^[a-zA-Z0-9\s,.\-]+$/';
     $numericRegex = '/^\d+$/';
     $latLngRegex = '/^-?\d+(\.\d+)?$/';
     $areaRegex = '/^\d+(m|km)$/';
@@ -57,10 +61,11 @@ if (isset($_POST['submit'])) {
 
     // Validate address
     if (empty($location)) {
-        $errors['location'] = "Address is required.";
-    } elseif (!preg_match($alphaRegex, $location)) {
-        $errors['location'] = "Address can only include alphabets.";
+    $errors['location'] = "Address is required.";
+    } elseif (!preg_match($addressRegex, $location)) {
+    $errors['location'] = "Address can include letters, numbers, commas, periods, and dashes.";
     }
+
 
     // Validate latitude
     if (empty($latitude)) {
@@ -86,6 +91,8 @@ if (isset($_POST['submit'])) {
     // Validate talla
     if (empty($talla)) {
         $errors['talla'] = "Talla is required.";
+    }elseif (!preg_match('/^\d+$/', $talla)) {
+    $errors['price'] = "Talla must contain digits only (no letters or symbols).";
     }
 
     // Validate number of rooms
@@ -109,6 +116,14 @@ if (isset($_POST['submit'])) {
         $errors['more'] = "Description can include alphabets, commas, and slashes.";
     }
 
+    //validate price
+    if (empty($price)) {
+    $errors['price'] = "Price is required.";
+    } elseif (!preg_match('/^\d+$/', $price)) {
+    $errors['price'] = "Price must contain digits only (no letters or symbols).";
+    }
+
+
     // Validate document extension
     $docExt = strtolower(pathinfo($document, PATHINFO_EXTENSION));
     if (empty($document)) {
@@ -123,14 +138,20 @@ if (isset($_POST['submit'])) {
         $docUploaded = move_uploaded_file($tempdoc, $doc_folder);
 
         if ($imageUploaded && $docUploaded) {
-            $sql = "INSERT INTO house (u_id, image, location, area, talla, roomNum, facilities, more, document, availability, admin_status, latitude, longitude) 
-            VALUES ('$id', '$image', '$location', '$area', '$talla', '$roomNum', '$facilities', '$more', '$document', '$availability', '$admin_status', '$latitude', '$longitude')";
+            $sql = "INSERT INTO house (u_id, image, location, area, talla, roomNum, facilities, more, price, document, availability, admin_status, latitude, longitude, owner_status) 
+            VALUES ('$id', '$image', '$location', '$area', '$talla', '$roomNum', '$facilities', '$more', '$price', '$document', '$availability', '$admin_status', '$latitude', '$longitude', '$owner_status')";
+
 
             $result = mysqli_query($con, $sql);
 
             if ($result) {
-                echo "<p style='color:green;'>Data Inserted Successfully.</p>";
-            } else {
+    // Store message in session so it survives redirect
+    $_SESSION['success_message'] = "Data Inserted Successfully.";
+
+    // Redirect to same page to prevent form resubmission
+    header("Location: " . $_SERVER['PHP_SELF']);
+    exit();
+} else {
                 die(mysqli_error($con));
             }
         } else {
@@ -159,6 +180,14 @@ if (isset($_POST['submit'])) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
 </head>
 <body>
+    <?php
+if (isset($_SESSION['success_message'])) {
+    echo "<script>alert('" . $_SESSION['success_message'] . "');</script>";
+    unset($_SESSION['success_message']); // clear after showing
+}
+?>
+
+
     <div class="admin-container">
         <!-- Sidebar -->
         <div class="admin-sidebar">
@@ -225,6 +254,11 @@ if (isset($_POST['submit'])) {
             <label for="more">Short Description</label>
             <input type="text" id="more" class="input-field" name="more" placeholder="Additional description"><br>
             <span class="error"><?php echo $errors['more'] ?? ''; ?></span>
+        </div>
+        <div class="reg-input">
+            <label for="more">Price</label>
+            <input type="text" id="price" class="input-field" name="price" placeholder="Price per month"><br>
+            <span class="error"><?php echo $errors['price'] ?? ''; ?></span>
         </div>
         <div class="reg-input">
             <label for="document">House Document</label>

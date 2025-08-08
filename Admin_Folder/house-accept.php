@@ -8,10 +8,10 @@ if(isset($_GET['accepteid'])){
     $sql = "UPDATE house SET admin_status = 'accept' WHERE admin_status = 'pending...' AND id=$id";
     $result = mysqli_query($con, $sql);
     if($result){
-        echo "Accept Successful";
+        header("Location: admin-house.php?deleted=1");
+        exit();
     }else{
-        echo "(Cannot adsfjkl)";
-        echo $id;
+         echo "Failed to delete house with ID: $id";
     }
 }
 ?>

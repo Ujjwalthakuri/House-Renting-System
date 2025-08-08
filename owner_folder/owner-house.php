@@ -112,7 +112,7 @@ include("../connect.php");
     
     // 👉 Check availability
     if (strtolower($availability) == 'available') {
-        echo "<button class='acc-del-btn'><a href='#' class='btn-click'>Update</a> </button> 
+        echo "<button class='acc-del-btn'><a href='house-update.php?updateid=" . $id . "' class='btn-click'>Update</a></button>
               <button class='acc-del-btn'><a href='owner-house-delete.php?deleteid=$id'>Delete</a> </button>";
     } else {
         // Leave the Operation column blank

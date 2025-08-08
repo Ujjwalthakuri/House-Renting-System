@@ -90,8 +90,13 @@
                          
                         <td>$admin_status</td>
                         <td>
-                            <button class='acc-del-btn'><a href='house-accept.php?accepteid=$id'>Accept</a></button> 
-                            <button class='acc-del-btn'><a href='../delete.php?deleteid=$id' >Reject</a> </button> 
+                            <button class='acc-del-btn'>
+        <a href='house-accept.php?accepteid=$id'  onclick=\"return confirm('Are you sure you want to accept this house?');\">Accept</a>
+      </button>
+      <button class='acc-del-btn'>
+        <a href='delete-house.php?deleteid=$id' onclick=\"return confirm('Are you sure you want to delete this house?');\">Reject</a>
+      </button>
+
                         </td>
                         </tr>"; 
                         }
@@ -163,8 +168,9 @@
                          
                         <td>$admin_status</td>
                         <td>
-                            
-                            <button class='acc-del-btn'><a href='../delete.php?deleteid=$id' >Delet</a> </button> 
+      <button class='acc-del-btn'>
+        <a href='delete-house.php?deleteid=$id' onclick=\"return confirm('Are you sure you want to delete this house?');\">Reject</a>
+      </button>
                         </td>
                         </tr>"; 
                         }
@@ -194,14 +200,14 @@
                 <th class="table-head">Document</th>
                 <!-- <th class="table-head">Booked_status</th> -->
                 <th class="table-head">Admin_status</th>
-                <th class="table-head">Operation</th>
+                <!-- <th class="table-head">Operation</th> -->
             </tr>
             </thead>
             <tbody>
            
             <?php
 
-                $sql = "select * from house status='booked'";
+                $sql = "SELECT * FROM house WHERE owner_status = 'accept'";
                 $result = mysqli_query($con, $sql);
                 if($result){
                     while($row=mysqli_fetch_assoc($result)){
@@ -234,10 +240,7 @@
                         </td>
                          
                         <td>$admin_status</td>
-                        <td>
-                            <button class='acc-del-btn'><a href='house-accept.php?accepteid=$id'>Accept</a></button> 
-                            <button class='acc-del-btn'><a href='../delete.php?deleteid=$id' >Reject</a> </button> 
-                        </td>
+                        
                         </tr>"; 
                         }
                         }
@@ -274,7 +277,7 @@
            
             <?php
 
-                $sql = "select * from house where status='pending'";
+                $sql = "SELECT * FROM house WHERE owner_status = 'pending'";
                 $result = mysqli_query($con, $sql);
                 if($result){
                     while($row=mysqli_fetch_assoc($result)){
@@ -308,8 +311,10 @@
                          
                         <td>$admin_status</td>
                         <td>
-                            <button class='acc-del-btn'><a href='house-accept.php?accepteid=$id'>Accept</a></button> 
-                            <button class='acc-del-btn'><a href='../delete.php?deleteid=$id' >Reject</a> </button> 
+      <button class='acc-del-btn'>
+        <a href='delete-house.php?deleteid=$id' onclick=\"return confirm('Are you sure you want to delete this house?');\">Reject</a>
+      </button>
+ 
                         </td>
                         </tr>"; 
                         }

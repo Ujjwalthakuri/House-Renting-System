@@ -7,11 +7,12 @@ if(isset($_GET['accepteid'])){
 
     $sql = "UPDATE user SET status = 'accept' WHERE status = 'pending...' AND id=$id";
     $result = mysqli_query($con, $sql);
-    if($result){
-        echo "Accept Successful";
-    }else{
-        echo "(Cannot adsfjkl)";
-        echo $id;
+    if ($result) {
+        // Redirect with success message
+        header("Location: Admin_Folder/admin-user.php?deleted=1");
+        exit();
+    } else {
+        echo "Failed to delete user with ID: $id";
     }
 }
 ?>

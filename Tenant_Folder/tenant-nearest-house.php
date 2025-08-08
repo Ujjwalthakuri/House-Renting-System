@@ -56,7 +56,7 @@ if (!isset($_SESSION['id'])) {
                 $tenant_lat = $_GET['lat'];
                 $tenant_lon = $_GET['lon'];
 
-       $sql = "SELECT * FROM house WHERE availability = 'available'";
+       $sql = "SELECT * FROM house WHERE admin_status='accept' AND availability='available'";
 $result = mysqli_query($con, $sql);
 
 if ($result && mysqli_num_rows($result) > 0) {

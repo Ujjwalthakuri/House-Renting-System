@@ -88,15 +88,22 @@ if(isset($_POST['submit'])){
 
     // If no errors, insert into database
     if (empty($errors)) {
-        $sql = "INSERT INTO user (fname, lname, address, phone, email, password, status, role) 
-                VALUES('$fname', '$lname', '$address', '$phone', '$email', '$password', '$status', '$role')";
-        $result = mysqli_query($con, $sql);
-        if($result){
-            echo "<p style='color:green;'>Registration successful!</p>";
-        } else {
-            die(mysqli_error($con));
-        }
+    $sql = "INSERT INTO user (fname, lname, address, phone, email, password, status, role) 
+            VALUES('$fname', '$lname', '$address', '$phone', '$email', '$password', '$status', '$role')";
+    $result = mysqli_query($con, $sql);
+    if($result){
+    echo "<p style='color:green;'>Your form has been submitted.</p>";
+    echo "<script>
+            setTimeout(function(){
+                window.location.href = '../Home/home.php';
+            }, 3000); // 3000ms = 3 seconds delay
+          </script>";
+    exit();
+}else {
+        die(mysqli_error($con));
     }
+}
+
 }
 ?>
 

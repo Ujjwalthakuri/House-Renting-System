@@ -1,19 +1,18 @@
 <?php
-include ("connect.php");
+include("connect.php");
 
-if(isset($_GET['deleteid'])){
-    $id = $_GET ['deleteid'];
-    
+if (isset($_GET['deleteid'])) {
+    $id = $_GET['deleteid'];
 
-    $sql = "delete from user WHERE id=$id";
-    // $sql = "delete from house WHERE id=$id";
+    $sql = "DELETE FROM user WHERE id=$id";
     $result = mysqli_query($con, $sql);
-    if($result){
-        echo "Delete Successful";
-    }else{
-        echo "(Cannot fjfjdelete)";
-        echo $id;
+
+    if ($result) {
+        // Redirect with success message
+        header("Location: Admin_Folder/admin-user.php?deleted=1");
+        exit();
+    } else {
+        echo "Failed to delete user with ID: $id";
     }
 }
-
 ?>
